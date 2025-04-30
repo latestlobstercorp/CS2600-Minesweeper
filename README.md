@@ -1,2 +1,2 @@
-#Contributions:
-##Thy Hoang: create empty board, print board
+# Contributions:
+## Thy Hoang: create empty board, print board
