@@ -1,5 +1,6 @@
-Zoey Yung
-Josephine Villar
-Thy Hoang
-Shane Sawyer
-Kristopher Walsh
+### Members:
+#### - Zoey Yung
+#### - Josephine Villar
+#### - Thy Hoang
+#### - Shane Sawyer
+#### - Kristopher Walsh
