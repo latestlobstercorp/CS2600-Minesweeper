@@ -47,3 +47,23 @@ void initializeMines(struct Board *b, int numMines) {
         }
     }
 }
+
+int countMines(struct Board *b, int row, int col) {
+    int count = 0;
+    int xVal[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
+    int yVal[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
+
+    for(int i = 0; i < 8; i++) {
+        int checkRow = row + xVal[i];
+        int checkCol = col + yVal[i];
+
+        if((checkRow >= 0 && checkRow < b->size) 
+        && (checkCol >= 0 && checkCol < b->size)) {
+            if(b->board[checkRow][checkCol] == 2) {
+                count++;
+            }
+        }
+    }
+    
+    return count;
+}
