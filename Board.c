@@ -1,3 +1,10 @@
+/* Members:
+- Zoey Yung
+- Josephine Villar
+- Thy Hoang
+- Shane Sawyer
+- Kristopher Walsh
+*/
 # include "Board.h"
 # include <stdio.h>
 # include <stdlib.h>
