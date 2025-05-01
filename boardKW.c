@@ -57,18 +57,23 @@ int main() {
     printf("\n");
 
     struct Board *b = createBoard(boardSize);
+    struct Board *mineBoard = createBoard(boardSize);
 
     numMines = boardSize;
 
-    initializeMines(b, numMines);
+    initializeMines(mineBoard, numMines);
     printBoard(b);
+    printBoard(mineBoard); //just for testing -delete later
 
     // Free allocated memory 
     for (int i = 0; i < boardSize; i++) {
         free(b->board[i]);
+        free(mineBoard->board[i]);
     }
     free(b->board);
+    free(mineBoard->board);
     free(b);
+    free(mineBoard);
 
     return 0;
 }
