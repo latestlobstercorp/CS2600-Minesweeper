@@ -9,6 +9,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+#include <stdbool.h>
 
 struct Board {
     int **board;
@@ -29,14 +30,16 @@ struct Board *createBoard(int size) {
 }
 
 void printBoard(struct Board *b) {
+    printf("\nCurrent Board:\n");
     for (int i = 0; i < b->size; i++) {
         for (int j = 0; j < b->size; j++) {
-            if (b->board[i][j] == 0) { // 0 represents an empty cell
-                printf("[]");
-            } else if (b->board[i][j] == 1) { // 1 represents a revealed cell
-                printf("-");
-            } else if (b->board[i][j] == 2) { // 2 represents a mine
-                printf("X"); 
+            int val = b->board[i][j];
+            if (val == 0 || val == 2) { // 0 represents an empty cell 2 represents a mine
+                printf("[]"); // unrevealed cell or hidden mine
+            } else if (val >= 10 && val <= 18) {
+                printf(" %d", val - 10); // revealed safe cell with mine count
+            } else if (val == 3) {
+                printf(" X"); // revealed mine (only after player hits it)
             }
         }
         printf("\n");
@@ -54,6 +57,7 @@ void initializeMines(struct Board *b, int numMines) {
         }
     }
 }
+
 
 int countMines(struct Board *b, int row, int col) {
     int count = 0;
@@ -73,4 +77,79 @@ int countMines(struct Board *b, int row, int col) {
     }
     
     return count;
+}
+
+//Make So It Recursively Digs For Empty Cells
+bool revealCell(struct Board *b, int row, int col) {
+    if (b->board[row][col] == 2) { // 2 = mine
+        b->board[row][col] = 3; // 3 = revealed mine
+        return true; // Mine hit
+    } else if (b->board[row][col] == 0) { // 0 = empty cell
+        int count = countMines(b, row, col);
+        b->board[row][col] = 10 + count; // Use 10+count to represent revealed safe cell with count
+    }
+    return false;
+}
+
+bool isGameOver(struct Board *b) {
+    for (int i = 0; i < b->size; i++) {
+        for (int j = 0; j < b->size; j++) {
+            if (b->board[i][j] == 0) {
+                return false; // still unrevealed safe cells
+            }
+        }
+    }
+    return true;
+}
+
+int main() {
+    int boardSize;
+    int numMines;
+    int row, col;
+
+    printf("%s\n", "Welcome to MINESWEEPER");
+
+    printf("%s\n", "Please Enter Width of Board, i.e. 5 :");
+    scanf("%d", &boardSize);
+    printf("\n");
+
+    struct Board *b = createBoard(boardSize);
+    numMines = boardSize;
+
+    initializeMines(b, numMines);
+    
+    bool hitMine = false;
+
+    while(!hitMine && !isGameOver(b)) {
+        printBoard(b);
+
+        printf("Choose a cell to reveal (i.e. 1 5): ");
+       
+       int ch;
+        if (scanf("%d %d", &row, &col) != 2) {
+        printf("Invalid input format please enter two integers.\n");
+        while ((ch = getchar()) != '\n' && ch != EOF);
+        continue;
+    }
+        if(row<0 || row>=boardSize || col<0 || col>=boardSize) {
+            printf("Invalid Input. Try Again.\n");
+            continue;
+        }
+        hitMine = revealCell(b, row, col);
+    }
+
+    if (hitMine) {
+        printf("Game Over! You hit a mine.\n");
+    } else {
+        printf("Congratulations! You cleared the board.\n");
+    }
+    
+    // Free allocated memory 
+    for (int i = 0; i < boardSize; i++) {
+        free(b->board[i]);
+    }
+    free(b->board);
+    free(b);
+
+    return 0;
 }
