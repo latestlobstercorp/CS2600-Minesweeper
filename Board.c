@@ -30,20 +30,21 @@ struct Board *createBoard(int size) {
 }
 
 void printBoard(struct Board *b) {
-    printf("\nCurrent Board:\n");
+    printf("\nCurrent Board:\n\n");
     for (int i = 0; i < b->size; i++) {
         for (int j = 0; j < b->size; j++) {
             int val = b->board[i][j];
             if (val == 0 || val == 2) { // 0 represents an empty cell 2 represents a mine
-                printf("[]"); // unrevealed cell or hidden mine
+                printf("[ ] "); // unrevealed cell or hidden mine
             } else if (val >= 10 && val <= 18) {
-                printf(" %d", val - 10); // revealed safe cell with mine count
+                printf(" %d  ", val - 10); // revealed safe cell with mine count
             } else if (val == 3) {
                 printf(" X"); // revealed mine (only after player hits it)
             }
         }
         printf("\n");
     }
+    printf("\n");
 }
 
 void initializeMines(struct Board *b, int numMines) {
@@ -131,6 +132,11 @@ int main() {
         while ((ch = getchar()) != '\n' && ch != EOF);
         continue;
     }
+
+        //Convert to 0-based index
+        row -= 1;
+        col -=1;
+        
         if(row<0 || row>=boardSize || col<0 || col>=boardSize) {
             printf("Invalid Input. Try Again.\n");
             continue;
