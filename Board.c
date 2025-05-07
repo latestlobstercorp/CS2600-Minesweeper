@@ -135,7 +135,7 @@ int main() {
 
         //Convert to 0-based index
         row -= 1;
-        col -=1;
+        col -= 1;
         
         if(row<0 || row>=boardSize || col<0 || col>=boardSize) {
             printf("Invalid Input. Try Again.\n");
