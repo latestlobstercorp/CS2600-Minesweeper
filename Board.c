@@ -39,7 +39,7 @@ void printBoard(struct Board *b) {
             } else if (val >= 10 && val <= 18) {
                 printf(" %d  ", val - 10); // revealed safe cell with mine count
             } else if (val == 3) {
-                printf(" X"); // revealed mine (only after player hits it)
+                printf(" X  "); // revealed mine (only after player hits it)
             }
         }
         printf("\n");
@@ -115,7 +115,7 @@ int main() {
     printf("\n");
 
     struct Board *b = createBoard(boardSize);
-    numMines = boardSize;
+    numMines = (int)(boardSize*boardSize * 0.15);
 
     initializeMines(b, numMines);
     
@@ -124,7 +124,7 @@ int main() {
     while(!hitMine && !isGameOver(b)) {
         printBoard(b);
 
-        printf("Choose a cell to reveal (i.e. 1 5): ");
+        printf("Choose a cell to reveal (Format x y i.e. 1 5): ");
        
        int ch;
         if (scanf("%d %d", &row, &col) != 2) {
@@ -145,6 +145,7 @@ int main() {
     }
 
     if (hitMine) {
+        printBoard(b);
         printf("Game Over! You hit a mine.\n");
     } else {
         printf("Congratulations! You cleared the board.\n");
