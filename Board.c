@@ -5,11 +5,13 @@
 - Shane Sawyer
 - Kristopher Walsh
 */
-#include "Board.h"
+
+#include <Board.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <time.h>
 
 struct Board
 {
@@ -36,22 +38,41 @@ struct Board *createBoard(int size)
 void printBoard(struct Board *b)
 {
     printf("\nCurrent Board:\n\n");
+
+    //Print Column Number
+    printf("    ");
+    for (int col = 0; col < b->size; col++) {
+      printf("  %d  ", col + 1);
+    }
+    printf("\n");
+
+    printf("   ");
+    for (int col = 0; col < b->size; col++) {
+      printf("_____");
+	     }
+    printf("\n");
+    
     for (int i = 0; i < b->size; i++)
     {
+      if (i<9)
+	printf(" %d |", i + 1);
+      else
+	printf("%d |", i + 1);
+      
         for (int j = 0; j < b->size; j++)
         {
             int val = b->board[i][j];
             if (val == 0 || val == 2)
             {                   // 0 represents an empty cell 2 represents a mine
-                printf("[ ] "); // unrevealed cell or hidden mine
+                printf(" [ ] "); // unrevealed cell or hidden mine
             }
             else if (val >= 10 && val <= 18)
             {
-                printf(" %d  ", val - 10); // revealed safe cell with mine count
+                printf(" [%d] ", val - 10); // revealed safe cell with mine count
             }
             else if (val == 3)
             {
-                printf(" X  "); // revealed mine (only after player hits it)
+                printf(" [X] "); // revealed mine (only after player hits it)
             }
         }
         printf("\n");
@@ -149,6 +170,8 @@ bool isGameOver(struct Board *b)
 
 int main()
 {
+  srand(time(NULL)); // Resets rand
+  
     int boardSize;
     int numMines;
     int row, col;
