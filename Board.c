@@ -6,7 +6,7 @@
 - Kristopher Walsh
 */
 
-#include <Board.h>
+#include "Board.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -42,7 +42,7 @@ void printBoard(struct Board *b)
     //Print Column Number
     printf("    ");
     for (int col = 0; col < b->size; col++) {
-      printf("  %d  ", col + 1);
+      printf("%-5d", col + 1);
     }
     printf("\n");
 
@@ -193,7 +193,7 @@ int main()
     {
         printBoard(b);
 
-        printf("Choose a cell to reveal (Format x y i.e. 1 5): ");
+        printf("Choose a cell to reveal (Format y x i.e. 1 5): ");
 
         int ch;
         if (scanf("%d %d", &row, &col) != 2)
