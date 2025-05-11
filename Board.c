@@ -40,9 +40,9 @@ void printBoard(struct Board *b)
     printf("\nCurrent Board:\n\n");
 
     //Print Column Number
-    printf("    ");
+    printf("     ");
     for (int col = 0; col < b->size; col++) {
-      printf("  %d  ", col + 1);
+      printf("%-5d", col + 1);
     }
     printf("\n");
 
