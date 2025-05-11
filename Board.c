@@ -42,7 +42,7 @@ void printBoard(struct Board *b)
     //Print Column Number
     printf("    ");
     for (int col = 0; col < b->size; col++) {
-      printf("%-5d", col + 1);
+      printf("  %d  ", col + 1);
     }
     printf("\n");
 
@@ -55,7 +55,7 @@ void printBoard(struct Board *b)
     for (int i = 0; i < b->size; i++)
     {
       if (i<9)
-	printf(" %d |", i + 1);
+	printf(" %d |", i + 1); // Print Row Number
       else
 	printf("%d |", i + 1);
       
@@ -176,8 +176,15 @@ int main()
     int numMines;
     int row, col;
 
-    printf("%s\n", "Welcome to MINESWEEPER");
+    //Print Header
+    printf("        _");
+    printf("  /\\/\\ (_) ___   ___  _____      _____  ___ _ __   ___ _ __\n");
+    printf(" /    \\| | '_ \\ / _ \\/ __\\ \\ /\\ / / _ \\/ _ \\ '_ \\ / _ \\ '__|\n");
+    printf("/ /\\/\\ \\ | | | |  __/\\__ \\  V  V /  __/  __/ |_) |  __/ |\n");
+    printf("\\/    \\/_|_| |_|\\___||___/ \\_/\\_/ \\___|\\___| .__/ \\___|_|\n");
+    printf("                                           |_|\n");
 
+    //Get Width of Board
     printf("%s\n", "Please Enter Width of Board, i.e. 5 :");
     scanf("%d", &boardSize);
     printf("\n");
